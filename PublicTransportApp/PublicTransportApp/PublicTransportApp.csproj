@@ -188,6 +188,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bus-stop.png" />
+    <Content Include="Content\bus.jpg" />
     <Content Include="Diagrams\ERD.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ERD.edmx</DependentUpon>
@@ -199,8 +201,12 @@
       <LastGenOutput>ERD.cs</LastGenOutput>
     </Content>
     <Content Include="Global.asax" />
+    <Content Include="index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="scripts\jquery-3.1.1.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -289,6 +295,7 @@
     <Content Include="Diagrams\ERD.edmx.diagram">
       <DependentUpon>ERD.edmx</DependentUpon>
     </Content>
+    <Content Include="scripts\jquery-3.1.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
