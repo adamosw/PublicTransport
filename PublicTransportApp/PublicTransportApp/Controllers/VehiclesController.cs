@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Mvc;
 using PublicTransportApp.DAL;
 using PublicTransportApp.Models;
 
@@ -24,16 +26,11 @@ namespace PublicTransportApp.Controllers
         }
 
         // GET: api/Vehicles/5
-        [ResponseType(typeof(Vehicle))]
-        public IHttpActionResult GetVehicle(int id)
+        //[ResponseType(typeof(Vehicle))]
+        [System.Web.Http.Route("api/vehicles/GetVehiclesByLine/{line}")]
+        public IEnumerable<Vehicle> GetVehiclesByLine(string line)
         {
-            Vehicle vehicle = db.Vehicles.Find(id);
-            if (vehicle == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(vehicle);
+            return db.Vehicles.Where(vehicle => vehicle.Line == line).ToList();
         }
 
         // PUT: api/Vehicles/5
@@ -83,7 +80,36 @@ namespace PublicTransportApp.Controllers
             db.Vehicles.Add(vehicle);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = vehicle.VehicleID }, vehicle);
+            return CreatedAtRoute("DefaultApi", new {id = vehicle.VehicleID}, vehicle);
+        }
+
+        [System.Web.Http.Route("api/vehicles/AddORUpdateExternal")]
+        public void AddOrUpdateExternal(Vehicle vehicle)
+        {
+            try
+            {
+                if (db.Vehicles.Any(V => V.ExternalID == vehicle.ExternalID))
+                {
+                    var car = db.Vehicles.First(V => V.ExternalID == vehicle.ExternalID);
+
+                    car.Latitude = vehicle.Latitude;
+                    car.Longitude = vehicle.Longitude;
+                    car.Line = vehicle.Line;
+
+                    db.Vehicles.AddOrUpdate(car);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    db.Vehicles.Add(vehicle);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+               
+            }
+
         }
 
         // DELETE: api/Vehicles/5

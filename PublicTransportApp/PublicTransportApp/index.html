@@ -11,7 +11,7 @@
          /* Always set the map height explicitly to define the size of the div
         * element that contains the map. */
         #map {
-            height: 100%;
+            height: 90%;
             width: 100%;
         }
         /* Optional: Makes the sample page fill the window. */
@@ -20,31 +20,69 @@
             margin: 0;
             padding: 0;
         }
+
+        #sidebar {
+            height: 10%;
+            width: 100%;
+        }
     </style>
 
 </head>
 <body>
 <div id="map"></div>
-    
+<div id="sidebar">
+    <label><input type="checkbox" id="100">100</label>
+    <label><input type="checkbox" id="101">101</label>
+    <label><input type="checkbox" id="103">103</label>
+    <label><input type="checkbox" id="104">104</label>
+    <label><input type="checkbox" id="241">241</label>
+    <label><input type="checkbox" id="243">243</label>
+    <label><input type="checkbox" id="245">245</label>
+    <label><input type="checkbox" id="247">247</label>
+    <label><input type="checkbox" id="255">255</label>
+</div>    
 <script>
     var map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 51.11, lng: 17.034 },
         zoom: 15
-    });;
-    $.ajax({
-        url: "/api/Vehicles",
-        success: function (result) {
-            var markers = [];
-            result.forEach(function (vehicle) {
-                markers.push(new google.maps.Marker({
-                    position: { lat: vehicle.Latitude, lng: vehicle.Longitude },
-                    map: map,
-                    title: vehicle.Name,
-                    icon: "/Content/bus.jpg"
-                }));
+    });
+    
+    var markersArray = [];
+    getBuses();
+    function getBuses() {
+        for (var i = 0; i < markersArray.length; i++) {
+            markersArray[i].setMap(null);
+        }
+        markersArray.length = 0;
+
+        var lines = [];
+        $("input").each(function (i) {
+            if ($(this).is(':checked')) {
+                lines.push($(this).attr('id'));
+            }
+        });
+        for (var i = 0; i < lines.length; i++) {
+            $.ajax({
+                url: "/api/vehicles/GetVehiclesByLine/" + lines[i],
+                success: function (result) {
+                    
+
+                    result.forEach(function (vehicle) {
+                        markersArray.push(new google.maps.Marker({
+                            position: { lat: vehicle.Latitude, lng: vehicle.Longitude },
+                            map: map,
+                            title: vehicle.Name,
+                            icon: "/Content/bus.jpg"
+                        }));
+                    });
+                    
+                }
             });
         }
-    });
+        setTimeout(getBuses, 20000);
+            
+    }
+
     $.ajax({
         url: "/api/Stops",
         success: function (result) {

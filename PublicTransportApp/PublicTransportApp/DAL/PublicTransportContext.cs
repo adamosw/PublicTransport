@@ -10,7 +10,7 @@ namespace PublicTransportApp.DAL
 {
     public class PublicTransportContext : IdentityDbContext<ApplicationUser>
     {
-        public PublicTransportContext() : base("PublicTransportContext")
+        public PublicTransportContext() : base("name=PublicTransportContext")
         {
         }
 

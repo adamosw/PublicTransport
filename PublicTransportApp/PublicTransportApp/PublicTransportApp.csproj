@@ -273,6 +273,14 @@
     <Compile Include="Migrations\201611021054321_Identity.Designer.cs">
       <DependentUpon>201611021054321_Identity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612010031369_addLine.cs" />
+    <Compile Include="Migrations\201612010031369_addLine.Designer.cs">
+      <DependentUpon>201612010031369_addLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612010852557_add externalid.cs" />
+    <Compile Include="Migrations\201612010852557_add externalid.Designer.cs">
+      <DependentUpon>201612010852557_add externalid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Route.cs" />
@@ -313,6 +321,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611021054321_Identity.resx">
       <DependentUpon>201611021054321_Identity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612010031369_addLine.resx">
+      <DependentUpon>201612010031369_addLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612010852557_add externalid.resx">
+      <DependentUpon>201612010852557_add externalid.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
