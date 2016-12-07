@@ -1,0 +1,67 @@
+﻿@model PublicTransportApp.Models.Stop
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddStop</title>
+</head>
+<body>
+    <div>
+        @using (@Html.BeginForm("AddStop", "Account"))
+        {
+            @Html.AntiForgeryToken()
+
+            <div id="login-error">
+                @Html.ValidationMessage("loginerror", "")
+                @Html.ValidationSummary()
+            </div>
+
+            <table id="login-table" style="margin-left: auto; margin-right: auto;">
+                <tr>
+                    <td>@Html.LabelFor(o => o.Name, "Nazwa:")</td>
+                    <td>
+                        @Html.TextBoxFor(o => o.Name)
+                        <div class="login-validation-message">
+                            @Html.ValidationMessageFor(o => o.Name)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(o => o.Latitude, "Szerokość geograficzna:")</td>
+                    <td>
+                        @Html.TextBoxFor(o => o.Latitude)
+                        <div class="login-validation-message">
+                            @Html.ValidationMessageFor(o => o.Latitude)
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="padding: 0px 20px 0px 0px; text-align: left;">
+                        @Html.LabelFor(o => o.Longitude, "Długość geograficzna:")
+                    </td>
+                    <td style="padding: 0px; text-align: left;">
+                        @Html.TextBoxFor(o => o.Longitude)
+                        <div class="login-validation-message">
+                            @Html.ValidationMessageFor(o => o.Longitude)
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2" style="text-align: right; padding-right: 20px;">
+                        <input type="submit" value="Dodaj" class="submitLink" style="height: 40px; text-align: right; margin: 0px; padding: 0px;" />
+                    </td>
+                </tr>
+            </table>
+        }
+
+    </div>
+</body>
+</html>

@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@model PublicTransportApp.ViewModels.LoginViewModel
+<!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>index</title>
+    <title>Public Transport Application</title>
     <script src="/scripts/jquery-3.1.1.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRdARzOjFubm58dqTSivoA098mKR2bBZ8"></script>
     
@@ -29,8 +30,37 @@
 
 </head>
 <body>
+<div id="top" style="float: left;">
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("Logoff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div>
+                <a href="@Url.Action("AddStop", "Account")">Dodaj przystanek</a>
+                <a href="javascript:document.getElementById('logoutForm').submit()">Wyloguj</a>
+            </div>
+        }
+    }
+    else
+    {
+        using (@Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            
+            @Html.LabelFor(o => o.Email) <text>: </text>
+            @Html.TextBoxFor(o => o.Email)
+            <text> </text> @Html.LabelFor(o => o.Password) <text>: </text>
+            @Html.PasswordFor(o => o.Password)
+            <input type="submit" value="Zaloguj" />
+            <text> </text><a href="@Url.Action("Register", "Account")">Rejestracja</a>
+    }
+}
+</div>
 <div id="map"></div>
-<div id="sidebar">
+<div id="sidebar" style="margin: auto; text-align: center; margin-top: 10px;">
+    <label><b>Trasy: </b></label>
     <label><input type="checkbox" id="100">100</label>
     <label><input type="checkbox" id="101">101</label>
     <label><input type="checkbox" id="103">103</label>
